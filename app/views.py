@@ -12,13 +12,23 @@ def template_view(request):
 
     if request.method == "POST":
         received_data = request.POST  # Приняли данные в словарь
-        return JsonResponse(received_data)
-        # как пример получение данных по ключу `my_text`
-        # my_text = received_data.get('my_text')
 
-        # TODO Проведите здесь получение и обработку данных если это необходимо
+        form = TemplateForm(received_data)  # Передали данные в форму
+        if form.is_valid():  # Проверили, что данные все валидные
+            my_text = form.cleaned_data.get("my_text")  # Получили очищенные данные
+            my_email = form.cleaned_data.get("my_email")
+            my_password = form.cleaned_data.get("my_password")
+            my_birthday = form.cleaned_data.get("my_birthday")
+            my_age = form.cleaned_data.get("my_age")
+            my_select = form.cleaned_data.get("my_select")
+            my_textarea = form.cleaned_data.get("my_textarea")
+            my_accept = form.cleaned_data.get("my_accept")
+            return JsonResponse(form.cleaned_data)
 
-        # TODO Верните HttpRequest или JsonResponse с данными
+            # TODO Получите остальные данные из формы и сделайте необходимые обработки (если они нужны)
+
+            # TODO Верните HttpRequest или JsonResponse с данными
+        return render(request, 'app/template_form.html', context={"form": form})
 
 
 def login_view(request):

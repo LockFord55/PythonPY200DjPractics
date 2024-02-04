@@ -5,14 +5,19 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 class TemplateForm(forms.Form):
     my_text = forms.CharField()
+    my_email = forms.EmailField()
+    my_password = forms.CharField(widget=forms.PasswordInput)
+    my_birthday = forms.DateField()
+    my_age = forms.IntegerField()
     # choices в ChoiceField нужен только для отображения в HTML форме
     my_select = forms.ChoiceField(choices=(
         ("begin", "Начальные"),
         ("middle", "Средние"),
-        ("snake_speek", "Разговариваю со змеями"),
+        ("snake_speek", "Владею парсельтангом"),
     ))
     # widget тоже нужен только для отображения в HTML
     my_textarea = forms.CharField(widget=forms.Textarea)
+    my_accept = forms.BooleanField()
 
     # TODO Опишите поля (поле для email, пароля, даты, целого числа, переключателя) и их параметры для вашего шаблона формы
 
