@@ -12,7 +12,7 @@ def template_view(request):
 
     if request.method == "POST":
         received_data = request.POST  # Приняли данные в словарь
-
+        return JsonResponse(received_data)
         # как пример получение данных по ключу `my_text`
         # my_text = received_data.get('my_text')
 
