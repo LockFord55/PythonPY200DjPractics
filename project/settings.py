@@ -46,6 +46,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#  Пример настроек для использования консольного бэкенда (для тестирования)
+
 LOGIN_REDIRECT_URL = '/profile/'
 
 SOCIAL_AUTH_GITHUB_KEY = '8830f18d946a16a7c8b7'
