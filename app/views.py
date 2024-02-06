@@ -70,6 +70,7 @@ class TemplView(View):
 
         return render(request, 'app/template_form.html', context={"form": form})
 
+
 def template_view(request):
     if request.method == "GET":
         return render(request, 'app/template_form.html')
@@ -130,7 +131,7 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()  # Возвращает сохраненного пользователя из данных формы
-            login(request, user)
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect("app:user_profile")
 
         return render(request, 'app/register.html', context={"form": form})
