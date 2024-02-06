@@ -5,7 +5,29 @@ from django.shortcuts import redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import TemplateForm, CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.views import View
 
+
+class TemplView(View):
+    def get(self, request):
+        return render(request, 'app/template_form.html')
+
+    def post(self, request):
+        received_data = request.POST  # Приняли данные в словарь
+
+        form = TemplateForm(received_data)  # Передали данные в форму
+        if form.is_valid():  # Проверили, что данные все валидные
+            my_text = form.cleaned_data.get("my_text")  # Получили очищенные данные
+            my_email = form.cleaned_data.get("my_email")
+            my_password = form.cleaned_data.get("my_password")
+            my_birthday = form.cleaned_data.get("my_birthday")
+            my_age = form.cleaned_data.get("my_age")
+            my_select = form.cleaned_data.get("my_select")
+            my_textarea = form.cleaned_data.get("my_textarea")
+            my_accept = form.cleaned_data.get("my_accept")
+            return JsonResponse(form.cleaned_data)
+
+        return render(request, 'app/template_form.html', context={"form": form})
 
 def template_view(request):
     if request.method == "GET":
