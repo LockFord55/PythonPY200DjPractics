@@ -7,6 +7,14 @@ from .forms import TemplateForm, CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.views import View
 from django.views.generic import TemplateView, FormView
+from django.contrib.auth.views import LoginView
+
+
+class MyLoginView(LoginView):
+    template_name = 'app/login.html'
+    redirect_authenticated_user = True  # Данный флаг не позволит авторизированному
+    # пользователю зайти на страницу с авторизацией и сразу его перенаправит на
+    # ссылку редиректа. По умолчанию redirect_authenticated_user = False
 
 
 class MyFormView(FormView):
