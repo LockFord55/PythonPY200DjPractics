@@ -6,6 +6,39 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import TemplateForm, CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.views import View
+from django.views.generic import TemplateView, FormView
+
+
+class MyFormView(FormView):
+    template_name = 'app/template_form.html'  # Шаблон, который будет рендерится
+    form_class = TemplateForm  # Класс формы который будет валидироваться
+    success_url = '/'  # Ссылка для перехода при удачной валидации
+
+    def form_valid(self, form):
+        return JsonResponse(form.cleaned_data)
+
+
+class MyTemplView(TemplateView):
+    template_name = 'app/template_form.html'
+
+    def post(self, request, *args, **kwargs):
+        received_data = request.POST  # Приняли данные в словарь
+
+        form = TemplateForm(received_data)  # Передали данные в форму
+        if form.is_valid():  # Проверили, что данные все валидные
+            my_text = form.cleaned_data.get("my_text")  # Получили очищенные данные
+            my_email = form.cleaned_data.get("my_email")
+            my_password = form.cleaned_data.get("my_password")
+            my_birthday = form.cleaned_data.get("my_birthday")
+            my_age = form.cleaned_data.get("my_age")
+            my_select = form.cleaned_data.get("my_select")
+            my_textarea = form.cleaned_data.get("my_textarea")
+            my_accept = form.cleaned_data.get("my_accept")
+            return JsonResponse(form.cleaned_data)
+
+        context = self.get_context_data(**kwargs)  # Получаем контекст, если он есть
+        context["form"] = form  # Записываем в контекст форму
+        return self.render_to_response(context)  # Возвращаем вызов метода render_to_response
 
 
 class TemplView(View):
